@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 
-namespace prototype.Engine.AI
+namespace A-Star-Sharp
 {
     public class Node
     {
