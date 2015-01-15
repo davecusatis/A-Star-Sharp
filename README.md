@@ -7,4 +7,5 @@ In my searching, I couldn't find a very straightforward A Star implementation in
   1. Use of priority queue to hold the nodes, currently a sorted list.
   2. Add functionality to consider all eight possible adjacent nodes.
   
-# For an example of how this is used, check out my "prototype" repository, prototype/Engine/AI/Astar.cs, and prototype/Engine/Region.cs is where the grid is built, paths are found, etc.
+# For an example of how this is used:
+Check out my "prototype" repository, prototype/Engine/AI/Astar.cs, and prototype/Engine/Region.cs is where the grid is built, paths are found, etc.
