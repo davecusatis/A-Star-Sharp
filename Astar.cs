@@ -22,6 +22,7 @@ namespace A-Star-Sharp
         }
         public float DistanceToTarget;
         public float Cost;
+        public float Weight;
         public float F
         {
             get
@@ -40,6 +41,7 @@ namespace A-Star-Sharp
             Position = pos;
             DistanceToTarget = -1;
             Cost = 1;
+            Weight = weight;
             Walkable = walkable;
         }
     }
@@ -97,7 +99,7 @@ namespace A-Star-Sharp
                         {
                             n.Parent = current;
                             n.DistanceToTarget = Math.Abs(n.Position.X - end.Position.X) + Math.Abs(n.Position.Y - end.Position.Y);
-                            n.Cost = 1 + n.Parent.Cost;
+                            n.Cost = n.Weight + n.Parent.Cost;
                             OpenList.Add(n);
                             OpenList = OpenList.OrderBy(node => node.F).ToList<Node>();
                         }
