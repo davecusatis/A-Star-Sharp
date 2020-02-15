@@ -113,11 +113,12 @@ namespace A-Star-Sharp
 
             // if all good, return path
             Node temp = ClosedList[ClosedList.IndexOf(current)];
-            while(temp.Parent != start && temp != null)
+            if (temp == null) return null;
+            do
             {
                 Path.Push(temp);
                 temp = temp.Parent;
-            }
+            } while (temp != start && temp != null) ;
             return Path;
         }
 		
