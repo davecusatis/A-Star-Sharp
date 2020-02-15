@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
+using System.Numerics;
 
-namespace A-Star-Sharp
+namespace AStarSharp
 {
     public class Node
     {
@@ -35,7 +35,7 @@ namespace A-Star-Sharp
         }
         public bool Walkable;
 
-        public Node(Vector2 pos, bool walkable)
+        public Node(Vector2 pos, bool walkable, float weight = 1)
         {
             Parent = null;
             Position = pos;
