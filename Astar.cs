@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
+using System.Numerics;
 
-namespace A-Star-Sharp
+namespace AStarSharp
 {
     public class Node
     {
@@ -22,6 +22,7 @@ namespace A-Star-Sharp
         }
         public float DistanceToTarget;
         public float Cost;
+        public float Weight;
         public float F
         {
             get
@@ -34,12 +35,13 @@ namespace A-Star-Sharp
         }
         public bool Walkable;
 
-        public Node(Vector2 pos, bool walkable)
+        public Node(Vector2 pos, bool walkable, float weight = 1)
         {
             Parent = null;
             Position = pos;
             DistanceToTarget = -1;
             Cost = 1;
+            Weight = weight;
             Walkable = walkable;
         }
     }
@@ -97,7 +99,7 @@ namespace A-Star-Sharp
                         {
                             n.Parent = current;
                             n.DistanceToTarget = Math.Abs(n.Position.X - end.Position.X) + Math.Abs(n.Position.Y - end.Position.Y);
-                            n.Cost = 1 + n.Parent.Cost;
+                            n.Cost = n.Weight + n.Parent.Cost;
                             OpenList.Add(n);
                             OpenList = OpenList.OrderBy(node => node.F).ToList<Node>();
                         }
@@ -113,11 +115,12 @@ namespace A-Star-Sharp
 
             // if all good, return path
             Node temp = ClosedList[ClosedList.IndexOf(current)];
-            while(temp.Parent != start && temp != null)
+            if (temp == null) return null;
+            do
             {
                 Path.Push(temp);
                 temp = temp.Parent;
-            }
+            } while (temp != start && temp != null) ;
             return Path;
         }
 		
