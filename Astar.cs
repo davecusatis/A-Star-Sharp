@@ -75,33 +75,38 @@ namespace AStarSharp
             Node end = new Node(new Vector2((int)(End.X / Node.NODE_SIZE), (int)(End.Y / Node.NODE_SIZE)), true);
 
             Stack<Node> Path = new Stack<Node>();
-            List<Node> OpenList = new List<Node>();
+            PriorityQueue<Node, float> OpenList = new PriorityQueue<Node,float>();
             List<Node> ClosedList = new List<Node>();
             List<Node> adjacencies;
             Node current = start;
            
             // add start node to Open List
-            OpenList.Add(start);
+            OpenList.Enqueue(start, start.F);
 
             while(OpenList.Count != 0 && !ClosedList.Exists(x => x.Position == end.Position))
             {
-                current = OpenList[0];
-                OpenList.Remove(current);
+                current = OpenList.Dequeue();
                 ClosedList.Add(current);
                 adjacencies = GetAdjacentNodes(current);
 
- 
                 foreach(Node n in adjacencies)
                 {
                     if (!ClosedList.Contains(n) && n.Walkable)
                     {
-                        if (!OpenList.Contains(n))
+                        bool isFound = false;
+                        foreach (var oLNode in OpenList.UnorderedItems)
+                        {
+                            if (oLNode.Element == n)
+                            {
+                                isFound = true;
+                            }
+                        }
+                        if (!isFound)
                         {
                             n.Parent = current;
                             n.DistanceToTarget = Math.Abs(n.Position.X - end.Position.X) + Math.Abs(n.Position.Y - end.Position.Y);
                             n.Cost = n.Weight + n.Parent.Cost;
-                            OpenList.Add(n);
-                            OpenList = OpenList.OrderBy(node => node.F).ToList<Node>();
+                            OpenList.Enqueue(n, n.F);
                         }
                     }
                 }
